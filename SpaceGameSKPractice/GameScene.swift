@@ -33,8 +33,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let motionManager = CMMotionManager()
     var xAcceleration: CGFloat = 0
     
-    var alienLife = 12
-    var torpedoDamage = 5
     
     override func didMove(to view: SKView) {
         //Background
@@ -88,15 +86,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         fireTorpedo()
     }
+    
+    
+
         
     @objc func addAlien() {
  
       possibleAliens = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: possibleAliens) as! [Alien]
 
-        let selectedAlien = possibleAliens[0]
-        let 👽 = SKSpriteNode(imageNamed: selectedAlien.image)
+        // get random alien from class
+        let alienInstance = AlienClass()
+        alienInstance.shuffleAliens()
+        let randomAlien = alienInstance.useSelectedAlien()
         
-        let alienSize = CGSize(width: 100, height: 100)  // Set your desired width and height
+        let alienImage = randomAlien.image
+        let alienHealth = randomAlien.health
+        
+        let 👽 = SKSpriteNode(imageNamed: alienImage)
+        let alienSize = CGSize(width: 100, height: 100)
             👽.size = alienSize
         
         let randomAlienPosition = GKRandomDistribution(lowestValue: 0, highestValue: Int(self.frame.size.width))
@@ -129,6 +136,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let torpedoSize = CGSize(width: 50, height: 50)
         let torpedoNode = SKSpriteNode(imageNamed: "torpedo")
+        var torpedoDamage = 75
         torpedoNode.size = torpedoSize
         torpedoNode.position = player.position
         torpedoNode.position.y += 5
@@ -172,7 +180,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func torpedoDidCollideWithAlien(torpedoNode: SKSpriteNode, alienNode: SKSpriteNode) {
         
-        alienLife -= torpedoDamage
+        // get random alien from class
+        let alienInstance = AlienClass()
+        alienInstance.shuffleAliens()
+        let randomAlien = alienInstance.useSelectedAlien()
+        
+        var alienHealth = randomAlien.health
+        var torpedoDamage = 500000
+        
+        func torpedoHit() {
+            torpedoDamage -= alienHealth
+        }
         
         let explosion = SKEmitterNode(fileNamed: "Explosion")!
         explosion.position = alienNode.position
@@ -182,10 +200,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         torpedoNode.removeFromParent ()
         
-        if alienLife >= 0 {
+        if alienHealth == 0 {
             alienNode.removeFromParent()
             score += 5
-        }
+        } else { }
         
         self.run(SKAction.wait(forDuration: 2)) {
             explosion.removeFromParent()

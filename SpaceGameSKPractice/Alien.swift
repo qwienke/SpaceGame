@@ -4,6 +4,8 @@
 //
 //  Created by Quinn Wienke on 2/11/24.
 //
+
+import GameplayKit
 struct Alien {
     var alienType: String
     var health: Int
@@ -16,6 +18,22 @@ struct Alien {
     }
 }
 
+class AlienClass {
+    var possibleAliens = [
+        Alien(alienType: "alien1", health: 50, image: "alien1"),
+        Alien(alienType: "alien2", health: 100, image: "alien2")
+    ]
+
+    func shuffleAliens() {
+        possibleAliens = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: possibleAliens) as! [Alien]
+    }
+
+    func useSelectedAlien() -> Alien {
+        let selectedAlien = possibleAliens[0]
+
+            return selectedAlien
+    }
+}
 
 
 
