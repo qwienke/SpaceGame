@@ -19,6 +19,7 @@
 		E46B3FDF2B79737B00DF8588 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E46B3FDD2B79737B00DF8588 /* explosion.mp3 */; };
 		E46B3FE32B79746D00DF8588 /* Starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = E46B3FE22B79746D00DF8588 /* Starfield.sks */; };
 		E46B3FE52B79748700DF8588 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = E46B3FE42B79748700DF8588 /* Explosion.sks */; };
+		E46B3FE72B79D53C00DF8588 /* Alien.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46B3FE62B79D53C00DF8588 /* Alien.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		E46B3FDD2B79737B00DF8588 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
 		E46B3FE22B79746D00DF8588 /* Starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Starfield.sks; sourceTree = "<group>"; };
 		E46B3FE42B79748700DF8588 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
+		E46B3FE62B79D53C00DF8588 /* Alien.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alien.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				E46B3FC72B79729A00DF8588 /* GameScene.sks */,
 				E46B3FC92B79729A00DF8588 /* Actions.sks */,
 				E46B3FCB2B79729A00DF8588 /* GameScene.swift */,
+				E46B3FE62B79D53C00DF8588 /* Alien.swift */,
 				E46B3FCD2B79729A00DF8588 /* GameViewController.swift */,
 				E46B3FDD2B79737B00DF8588 /* explosion.mp3 */,
 				E46B3FDC2B79737B00DF8588 /* torpedo.mp3 */,
@@ -163,6 +166,7 @@
 				E46B3FCC2B79729A00DF8588 /* GameScene.swift in Sources */,
 				E46B3FCE2B79729A00DF8588 /* GameViewController.swift in Sources */,
 				E46B3FC62B79729A00DF8588 /* AppDelegate.swift in Sources */,
+				E46B3FE72B79D53C00DF8588 /* Alien.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

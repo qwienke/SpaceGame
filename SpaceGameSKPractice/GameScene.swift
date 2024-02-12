@@ -22,7 +22,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     var gameTimer: Timer!
-    var possibleAliens = ["alien1", "alien2"]
+    var possibleAliens = [
+        Alien(alienType: "alien1", health: 50, image: "alien1"),
+        Alien(alienType: "alien2", health: 100, image: "alien2")
+    ]
     
     let alienCatagory: UInt32 = 0x1 << 1
     let photonTorpedoCatagory: UInt32 = 0x1 << 0
@@ -87,9 +90,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
         
     @objc func addAlien() {
-        possibleAliens = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: possibleAliens) as! [String]
-        
-        let 👽 = SKSpriteNode(imageNamed: possibleAliens[0])
+ 
+      possibleAliens = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: possibleAliens) as! [Alien]
+
+        let selectedAlien = possibleAliens[0]
+        let 👽 = SKSpriteNode(imageNamed: selectedAlien.image)
         
         let alienSize = CGSize(width: 100, height: 100)  // Set your desired width and height
             👽.size = alienSize
