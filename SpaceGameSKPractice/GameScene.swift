@@ -22,7 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     var gameTimer: Timer!
-    var possibleAliens = ["alien1", "alien2", "alien3"]
+    var possibleAliens = ["alien1", "alien2"]
     
     let alienCatagory: UInt32 = 0x1 << 1
     let photonTorpedoCatagory: UInt32 = 0x1 << 0
@@ -31,7 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var xAcceleration: CGFloat = 0
     
     override func didMove(to view: SKView) {
-        
+        //Background
         starfield = SKEmitterNode(fileNamed: "Starfield")
         starfield.position = CGPoint(x: 0, y: 1472)
         starfield.advanceSimulationTime(10)
@@ -39,23 +39,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         starfield.zPosition = -1
         
-
+        //Player
+        let playerSize = CGSize(width: 130, height: 130)
         player = SKSpriteNode(imageNamed: "shuttle")
-//        player.position = CGPoint(add player location)
+        player.size = playerSize
+        player.position = CGPoint(x: 0, y: -550)
+        
         
         self.addChild(player)
         
-        
+        //Physics
         self.physicsWorld.gravity = CGVector(dx:0, dy: 0)
         self.physicsWorld.contactDelegate = self
         
-        /// Not Working? or just not showing
+        /// Score Label
         scoreLabel = SKLabelNode(text: "Score: 0")
-        //scoreLabel.position = CGPoint(x: 100, y: 100)
+        scoreLabel.position = CGPoint(x: 0, y: 0)
         scoreLabel.fontName = "ComicSans"
         scoreLabel.fontSize = 36
         scoreLabel.fontColor = .white
         score = 0
+        addChild(scoreLabel)
+
         
         
         gameTimer = Timer(timeInterval: 0.75, target: self, selector: #selector(addAlien), userInfo: nil, repeats: true)
@@ -83,10 +88,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let 👽 = SKSpriteNode(imageNamed: possibleAliens[0])
         
-        let randomAlienPosition = GKRandomDistribution(lowestValue: 0, highestValue: 414)
-        let position = CGFloat(randomAlienPosition.nextInt())
+        let alienSize = CGSize(width: 100, height: 100)  // Set your desired width and height
+            👽.size = alienSize
         
-        👽.position = CGPoint(x: position, y: self.frame.size.height + 👽.size.height)
+        let randomAlienPosition = GKRandomDistribution(lowestValue: 0, highestValue: Int(self.frame.size.width))
+        let xposition = CGFloat(randomAlienPosition.nextInt())
+        
+        👽.position = CGPoint(x: xposition, y: self.frame.size.height + 👽.size.height)
+
         
         👽.physicsBody = SKPhysicsBody(rectangleOf: 👽.size)
         👽.physicsBody?.isDynamic = true
@@ -101,17 +110,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         var actionArray = [SKAction]()
         
-        actionArray.append(SKAction.move(to: CGPoint(x: position, y: -👽.size.height), duration: TimeInterval(animationDuration)))
+        actionArray.append(SKAction.move(to: CGPoint(x: xposition, y: -👽.size.height), duration: TimeInterval(animationDuration)))
         actionArray.append(SKAction.removeFromParent())
         
         👽.run(SKAction.sequence(actionArray))
-        print("alien spawned")
     }
         
     func fireTorpedo() {
         self.run(SKAction.playSoundFileNamed("torpedo.mp3", waitForCompletion: false))
         
+        let torpedoSize = CGSize(width: 50, height: 50)
         let torpedoNode = SKSpriteNode(imageNamed: "torpedo")
+        torpedoNode.size = torpedoSize
         torpedoNode.position = player.position
         torpedoNode.position.y += 5
         
