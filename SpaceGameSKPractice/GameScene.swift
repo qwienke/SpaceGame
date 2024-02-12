@@ -31,7 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var xAcceleration: CGFloat = 0
     
     var alienLife = 12
-    var torpedoDamage = 6
+    var torpedoDamage = 5
     
     override func didMove(to view: SKView) {
         //Background
@@ -167,7 +167,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func torpedoDidCollideWithAlien(torpedoNode: SKSpriteNode, alienNode: SKSpriteNode) {
         
-      
+        alienLife -= torpedoDamage
+        
         let explosion = SKEmitterNode(fileNamed: "Explosion")!
         explosion.position = alienNode.position
         self.addChild(explosion)
@@ -175,15 +176,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.run(SKAction.playSoundFileNamed ("explosion.mp3", waitForCompletion: false))
         
         torpedoNode.removeFromParent ()
-        alienLife -= torpedoDamage
-        if alienLife == 0 {
+        
+        if alienLife >= 0 {
             alienNode.removeFromParent()
-            
-            self.run(SKAction.wait(forDuration: 2)) {
-                explosion.removeFromParent()
-            }
             score += 5
-        } else { }
+        }
+        
+        self.run(SKAction.wait(forDuration: 2)) {
+            explosion.removeFromParent()
+        }
+        
     }
     
     override func didSimulatePhysics() {
